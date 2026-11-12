@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Little City Drive</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- MAIN MENU -->
+  <div id="main-menu">
+    <div class="menu-bg"></div>
+    <div class="menu-content">
+      <div class="game-logo">
+        <span class="logo-little">LITTLE</span>
+        <span class="logo-city">CITY</span>
+        <span class="logo-drive">DRIVE</span>
+      </div>
+      <p class="menu-subtitle">Take a ride. Explore the town. Enjoy the journey.</p>
+      <div class="menu-buttons">
+        <button id="btn-start" class="btn-primary">▶ START DRIVING</button>
+        <button id="btn-controls" class="btn-secondary">⌨ CONTROLS</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLS OVERLAY -->
+  <div id="controls-overlay" class="hidden">
+    <div class="overlay-box">
+      <h2>CONTROLS</h2>
+      <div class="controls-grid">
+        <div class="control-section">
+          <h3>⌨ Keyboard</h3>
+          <table>
+            <tr><td><kbd>W</kbd> / <kbd>↑</kbd></td><td>Accelerate</td></tr>
+            <tr><td><kbd>S</kbd> / <kbd>↓</kbd></td><td>Brake / Reverse</td></tr>
+            <tr><td><kbd>A</kbd> / <kbd>←</kbd></td><td>Steer Left</td></tr>
+            <tr><td><kbd>D</kbd> / <kbd>→</kbd></td><td>Steer Right</td></tr>
+            <tr><td><kbd>Space</kbd></td><td>Handbrake</td></tr>
+            <tr><td><kbd>R</kbd></td><td>Reset Car</td></tr>
+            <tr><td><kbd>C</kbd></td><td>Change Camera</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Pause</td></tr>
+          </table>
+        </div>
+        <div class="control-section">
+          <h3>📱 Mobile</h3>
+          <p>Use the on-screen buttons to drive. Touch and hold for continuous input.</p>
+          <div class="mobile-preview">
+            <div class="mp-row"><span class="mp-btn">▲</span></div>
+            <div class="mp-row"><span class="mp-btn">◄</span><span class="mp-btn">▼</span><span class="mp-btn">►</span></div>
+          </div>
+        </div>
+      </div>
+      <button id="btn-controls-close" class="btn-primary">GOT IT!</button>
+    </div>
+  </div>
+
+  <!-- GAME CANVAS -->
+  <canvas id="game-canvas"></canvas>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <!-- Speedometer -->
+    <div id="speedometer">
+      <canvas id="speedo-canvas" width="120" height="120"></canvas>
+      <div id="speed-value">0</div>
+      <div id="speed-unit">KM/H</div>
+    </div>
+
+    <!-- Score -->
+    <div id="score-display">
+      <div id="score-label">SCORE</div>
+      <div id="score-value">0</div>
+    </div>
+
+    <!-- Air time indicator -->
+    <div id="air-display" class="hidden">🚀 AIRTIME!</div>
+
+    <!-- Gear & Camera Info -->
+    <div id="hud-info">
+      <div class="hud-pill" id="gear-display">D</div>
+      <div class="hud-pill" id="cam-display">CAM 1</div>
+    </div>
+
+    <!-- Top-right buttons -->
+    <div id="hud-buttons">
+      <button id="btn-pause-hud" title="Pause">⏸</button>
+      <button id="btn-reset-hud" title="Reset Car">↺</button>
+    </div>
+
+    <!-- Mobile touch controls -->
+    <div id="touch-controls">
+      <div id="touch-left-col">
+        <button class="touch-btn" id="touch-left">◄</button>
+      </div>
+      <div id="touch-center-col">
+        <button class="touch-btn" id="touch-accel">▲</button>
+        <button class="touch-btn" id="touch-brake">▼</button>
+      </div>
+      <div id="touch-right-col">
+        <button class="touch-btn" id="touch-right">►</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAUSE MENU -->
+  <div id="pause-menu" class="hidden">
+    <div class="overlay-box">
+      <h2>⏸ PAUSED</h2>
+      <div class="menu-buttons">
+        <button id="btn-resume" class="btn-primary">▶ RESUME</button>
+        <button id="btn-restart" class="btn-secondary">↺ RESTART</button>
+        <button id="btn-mainmenu" class="btn-secondary">⌂ MAIN MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,488 @@
+/* ============================================
+   LITTLE CITY DRIVE — styles.css
+   ============================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #1a1a2e;
+  user-select: none;
+}
+
+/* ── Canvas ──────────────────────────────── */
+#game-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+/* ── Utility ─────────────────────────────── */
+.hidden { display: none !important; }
+
+/* ── Main Menu ───────────────────────────── */
+#main-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  z-index: 0;
+}
+
+.menu-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(255,100,50,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 30%, rgba(50,150,255,0.15) 0%, transparent 60%);
+}
+
+.menu-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 40px;
+}
+
+.game-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.logo-little {
+  font-size: clamp(14px, 3vw, 22px);
+  font-weight: 300;
+  letter-spacing: 0.6em;
+  color: #aad4f5;
+  text-transform: uppercase;
+}
+
+.logo-city {
+  font-size: clamp(60px, 12vw, 120px);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: #fff;
+  text-shadow: 0 0 60px rgba(100,200,255,0.4), 0 4px 20px rgba(0,0,0,0.5);
+  line-height: 0.9;
+}
+
+.logo-drive {
+  font-size: clamp(28px, 5vw, 50px);
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  color: #ff6b35;
+  text-shadow: 0 0 30px rgba(255,107,53,0.5);
+}
+
+.menu-subtitle {
+  font-size: clamp(12px, 2vw, 16px);
+  color: rgba(255,255,255,0.6);
+  margin: 20px 0 40px;
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ff6b35, #f7c59f);
+  color: #1a0a00;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 50px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 20px rgba(255,107,53,0.4);
+  min-width: 200px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(255,107,53,0.6);
+}
+
+.btn-primary:active { transform: scale(0.97); }
+
+.btn-secondary {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50px;
+  padding: 12px 40px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  backdrop-filter: blur(4px);
+  min-width: 200px;
+}
+
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active { transform: scale(0.97); }
+
+/* ── Overlays (Controls / Pause) ─────────── */
+#controls-overlay,
+#pause-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+}
+
+.overlay-box {
+  background: rgba(10, 20, 35, 0.95);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 36px 40px;
+  max-width: 640px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+.overlay-box h2 {
+  color: #fff;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  margin-bottom: 24px;
+}
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.control-section h3 {
+  color: #ff6b35;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.control-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.control-section td {
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+  padding: 5px 6px;
+  vertical-align: middle;
+}
+
+.control-section td:first-child {
+  white-space: nowrap;
+}
+
+.control-section p {
+  color: rgba(255,255,255,0.65);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+kbd {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 5px;
+  padding: 2px 7px;
+  font-family: monospace;
+  font-size: 11px;
+  color: #fff;
+  margin: 1px;
+}
+
+.mobile-preview {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.mp-row {
+  display: flex;
+  gap: 6px;
+}
+
+.mp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* ── HUD ─────────────────────────────────── */
+#hud {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Speedometer */
+#speedometer {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  width: 120px;
+  text-align: center;
+}
+
+#speedo-canvas {
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+}
+
+#speed-value {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  line-height: 1;
+  pointer-events: none;
+}
+
+#speed-unit {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.6);
+  pointer-events: none;
+}
+
+/* Gear / Camera Pills */
+#hud-info {
+  position: absolute;
+  bottom: 32px;
+  left: 24px;
+  display: flex;
+  gap: 8px;
+}
+
+.hud-pill {
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(4px);
+}
+
+/* Top-right HUD buttons */
+#hud-buttons {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  pointer-events: all;
+}
+
+#hud-buttons button {
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 20px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+#hud-buttons button:hover { background: rgba(0,0,0,0.7); }
+
+/* ── Touch Controls ──────────────────────── */
+#touch-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  gap: 8px;
+  align-items: flex-end;
+  pointer-events: all;
+}
+
+@media (pointer: coarse) {
+  #touch-controls { display: flex; }
+}
+
+#touch-left-col,
+#touch-right-col,
+#touch-center-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.touch-btn {
+  width: 68px;
+  height: 68px;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.35);
+  border-radius: 16px;
+  color: #fff;
+  font-size: 26px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.1s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  backdrop-filter: blur(4px);
+}
+
+.touch-btn:active,
+.touch-btn.active {
+  background: rgba(255, 107, 53, 0.5);
+  border-color: #ff6b35;
+}
+
+/* ── Responsive tweaks ───────────────────── */
+@media (max-width: 500px) {
+  .controls-grid { grid-template-columns: 1fr; }
+  .overlay-box { padding: 24px 20px; }
+  #speedometer { right: 12px; bottom: 100px; }
+  #hud-info { left: 12px; bottom: 100px; }
+}
+
+/* ── Score display ───────────────────────────────────────────── */
+#score-display {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+#score-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.6);
+}
+
+#score-value {
+  font-size: 36px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255,200,50,0.8), 0 2px 8px rgba(0,0,0,0.6);
+  line-height: 1;
+  transition: transform 0.08s;
+}
+
+#score-value.bump {
+  transform: scale(1.35);
+  color: #ffdd44;
+}
+
+/* ── Air-time banner ─────────────────────────────────────────── */
+#air-display {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,120,0,0.85);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  padding: 6px 20px;
+  border-radius: 50px;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  animation: pulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 0.85; }
+  to   { opacity: 1; transform: translateX(-50%) scale(1.04); }
+}
+
+/* ── Score popup (injected by JS) ───────────────────────────── */
+.score-popup {
+  position: fixed;
+  font-size: 22px;
+  font-weight: 900;
+  color: #ffee44;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  pointer-events: none;
+  animation: popFly 0.9s ease-out forwards;
+  z-index: 50;
+}
+
+@keyframes popFly {
+  0%   { opacity: 1;   transform: translateY(0) scale(1); }
+  60%  { opacity: 0.9; transform: translateY(-38px) scale(1.15); }
+  100% { opacity: 0;   transform: translateY(-70px) scale(0.8); }
+}
