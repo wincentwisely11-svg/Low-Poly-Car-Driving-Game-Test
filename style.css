@@ -1,488 +1,108 @@
 /* ============================================
-   LITTLE CITY DRIVE — styles.css
+   FREESTYLE CAR CRASH — styles.css
    ============================================ */
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: #1a1a2e;
-  user-select: none;
+  width: 100%; height: 100%; overflow: hidden;
+  font-family: 'Impact', 'Segoe UI Black', system-ui, sans-serif;
+  background: #2b00ff; user-select: none; touch-action: none;
 }
 
-/* ── Canvas ──────────────────────────────── */
-#game-canvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  display: block;
-  z-index: 0;
-}
-
-/* ── Utility ─────────────────────────────── */
+#game-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: block; z-index: 0; }
 .hidden { display: none !important; }
 
 /* ── Main Menu ───────────────────────────── */
-#main-menu {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.menu-bg {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-  z-index: 0;
-}
-
+#main-menu { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; }
+.menu-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #ff0055 0%, #2b00ff 100%); z-index: 0; }
 .menu-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 50%, rgba(255,100,50,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 30%, rgba(50,150,255,0.15) 0%, transparent 60%);
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 10px, transparent 10px, transparent 20px);
 }
 
-.menu-content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 40px;
-}
+.menu-content { position: relative; z-index: 1; text-align: center; padding: 40px; }
+.game-logo { display: flex; flex-direction: column; align-items: center; line-height: 1; margin-bottom: 16px; transform: skew(-5deg); }
 
-.game-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 1;
-  margin-bottom: 16px;
-}
+.logo-little { font-size: clamp(20px, 4vw, 36px); font-weight: 900; letter-spacing: 0.1em; color: #00ffff; text-shadow: 3px 3px 0px #000; text-transform: uppercase; margin-bottom: -10px; z-index: 2; }
+.logo-city { font-size: clamp(70px, 14vw, 140px); font-weight: 900; letter-spacing: 0.02em; color: #ff0055; text-shadow: 6px 6px 0px #000, -2px -2px 0 #fff; line-height: 0.85; }
+.logo-drive { font-size: clamp(34px, 7vw, 64px); font-weight: 900; letter-spacing: 0.2em; color: #ffff00; text-shadow: 4px 4px 0px #000; margin-top: -5px; }
 
-.logo-little {
-  font-size: clamp(14px, 3vw, 22px);
-  font-weight: 300;
-  letter-spacing: 0.6em;
-  color: #aad4f5;
-  text-transform: uppercase;
-}
+.menu-subtitle { font-family: 'Segoe UI', sans-serif; font-size: clamp(14px, 2.5vw, 18px); font-weight: 800; color: #fff; margin: 20px 0 40px; text-shadow: 2px 2px 0px #000; text-transform: uppercase; }
 
-.logo-city {
-  font-size: clamp(60px, 12vw, 120px);
-  font-weight: 900;
-  letter-spacing: 0.05em;
-  color: #fff;
-  text-shadow: 0 0 60px rgba(100,200,255,0.4), 0 4px 20px rgba(0,0,0,0.5);
-  line-height: 0.9;
-}
+.menu-buttons { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+.btn-primary { font-family: 'Impact', sans-serif; background: #ffff00; color: #000; border: 4px solid #000; border-radius: 8px; padding: 14px 50px; font-size: 22px; letter-spacing: 0.1em; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; box-shadow: 6px 6px 0px #ff0055; min-width: 240px; text-transform: uppercase; }
+.btn-primary:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px #ff0055; }
+.btn-primary:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px #ff0055; }
 
-.logo-drive {
-  font-size: clamp(28px, 5vw, 50px);
-  font-weight: 700;
-  letter-spacing: 0.5em;
-  color: #ff6b35;
-  text-shadow: 0 0 30px rgba(255,107,53,0.5);
-}
+.btn-secondary { font-family: 'Impact', sans-serif; background: #00ffff; color: #000; border: 4px solid #000; border-radius: 8px; padding: 12px 40px; font-size: 18px; letter-spacing: 0.1em; cursor: pointer; transition: transform 0.1s; box-shadow: 4px 4px 0px #2b00ff; min-width: 240px; text-transform: uppercase; }
+.btn-secondary:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #2b00ff; }
+.btn-secondary:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0px #2b00ff; }
 
-.menu-subtitle {
-  font-size: clamp(12px, 2vw, 16px);
-  color: rgba(255,255,255,0.6);
-  margin: 20px 0 40px;
-  font-style: italic;
-  letter-spacing: 0.05em;
-}
-
-.menu-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: center;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #ff6b35, #f7c59f);
-  color: #1a0a00;
-  border: none;
-  border-radius: 50px;
-  padding: 14px 50px;
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 4px 20px rgba(255,107,53,0.4);
-  min-width: 200px;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(255,107,53,0.6);
-}
-
-.btn-primary:active { transform: scale(0.97); }
-
-.btn-secondary {
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 50px;
-  padding: 12px 40px;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
-  backdrop-filter: blur(4px);
-  min-width: 200px;
-}
-
-.btn-secondary:hover {
-  background: rgba(255,255,255,0.2);
-  transform: translateY(-1px);
-}
-
-.btn-secondary:active { transform: scale(0.97); }
-
-/* ── Overlays (Controls / Pause) ─────────── */
-#controls-overlay,
-#pause-menu {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(6px);
-}
-
-.overlay-box {
-  background: rgba(10, 20, 35, 0.95);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 20px;
-  padding: 36px 40px;
-  max-width: 640px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-}
-
-.overlay-box h2 {
-  color: #fff;
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  margin-bottom: 24px;
-}
-
-.controls-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 28px;
-  text-align: left;
-}
-
-.control-section h3 {
-  color: #ff6b35;
-  font-size: 13px;
-  letter-spacing: 0.15em;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-.control-section table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.control-section td {
-  color: rgba(255,255,255,0.8);
-  font-size: 13px;
-  padding: 5px 6px;
-  vertical-align: middle;
-}
-
-.control-section td:first-child {
-  white-space: nowrap;
-}
-
-.control-section p {
-  color: rgba(255,255,255,0.65);
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-kbd {
-  display: inline-block;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 5px;
-  padding: 2px 7px;
-  font-family: monospace;
-  font-size: 11px;
-  color: #fff;
-  margin: 1px;
-}
-
-.mobile-preview {
-  margin-top: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.mp-row {
-  display: flex;
-  gap: 6px;
-}
-
-.mp-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: rgba(255,255,255,0.12);
-  border-radius: 8px;
-  color: #fff;
-  font-size: 14px;
-}
+/* ── Overlays ─────────── */
+#controls-overlay, #pause-menu { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); }
+.overlay-box { font-family: 'Segoe UI', sans-serif; background: #fff; border: 6px solid #000; border-radius: 12px; padding: 36px 40px; max-width: 640px; width: 90%; text-align: center; box-shadow: 12px 12px 0px #ff0055; }
+.overlay-box h2 { font-family: 'Impact', sans-serif; color: #000; font-size: 32px; letter-spacing: 0.1em; margin-bottom: 24px; text-transform: uppercase; text-shadow: 2px 2px 0px #00ffff; }
+.controls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; text-align: left; }
+.control-section h3 { color: #ff0055; font-size: 16px; font-weight: 900; margin-bottom: 12px; text-transform: uppercase; }
+.control-section table { width: 100%; border-collapse: collapse; }
+.control-section td { color: #000; font-size: 14px; font-weight: 700; padding: 5px 6px; vertical-align: middle; }
+.control-section p { color: #000; font-size: 14px; font-weight: 600; line-height: 1.6; }
+kbd { display: inline-block; background: #000; border: 2px solid #000; border-radius: 4px; padding: 2px 7px; font-family: 'Impact', sans-serif; font-size: 12px; color: #ffff00; margin: 1px; }
 
 /* ── HUD ─────────────────────────────────── */
-#hud {
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  pointer-events: none;
-}
+#hud { position: fixed; inset: 0; z-index: 10; pointer-events: none; }
+#speedometer { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); width: 120px; text-align: center; }
+#speedo-canvas { display: block; margin: 0 auto; filter: drop-shadow(4px 4px 0px rgba(0,0,0,1)); }
+#speed-value { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); font-size: 32px; font-family: 'Impact', sans-serif; color: #fff; text-shadow: 3px 3px 0px #000; line-height: 1; pointer-events: none; }
+#speed-unit { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 900; font-family: 'Segoe UI', sans-serif; color: #00ffff; text-shadow: 2px 2px 0px #000; pointer-events: none; }
 
-/* Speedometer */
-#speedometer {
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  width: 120px;
-  text-align: center;
-}
+#hud-info { position: absolute; top: 16px; left: 16px; display: flex; gap: 8px; }
+.hud-pill { background: #ffff00; border: 3px solid #000; border-radius: 8px; padding: 6px 16px; font-family: 'Impact', sans-serif; font-size: 16px; color: #000; box-shadow: 3px 3px 0px #ff0055; }
 
-#speedo-canvas {
-  display: block;
-  margin: 0 auto;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
-}
-
-#speed-value {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 28px;
-  font-weight: 900;
-  color: #fff;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-  line-height: 1;
-  pointer-events: none;
-}
-
-#speed-unit {
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: rgba(255,255,255,0.6);
-  pointer-events: none;
-}
-
-/* Gear / Camera Pills */
-#hud-info {
-  position: absolute;
-  bottom: 32px;
-  left: 24px;
-  display: flex;
-  gap: 8px;
-}
-
-.hud-pill {
-  background: rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 50px;
-  padding: 6px 16px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.08em;
-  backdrop-filter: blur(4px);
-}
-
-/* Top-right HUD buttons */
-#hud-buttons {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  display: flex;
-  gap: 8px;
-  pointer-events: all;
-}
-
-#hud-buttons button {
-  background: rgba(0,0,0,0.45);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 10px;
-  color: #fff;
-  font-size: 20px;
-  width: 44px;
-  height: 44px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-  backdrop-filter: blur(4px);
-}
-
-#hud-buttons button:hover { background: rgba(0,0,0,0.7); }
-
-/* ── Touch Controls ──────────────────────── */
-#touch-controls {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: none;
-  gap: 8px;
-  align-items: flex-end;
-  pointer-events: all;
-}
-
-@media (pointer: coarse) {
-  #touch-controls { display: flex; }
-}
-
-#touch-left-col,
-#touch-right-col,
-#touch-center-col {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
-}
-
-.touch-btn {
-  width: 68px;
-  height: 68px;
-  background: rgba(255,255,255,0.15);
-  border: 2px solid rgba(255,255,255,0.35);
-  border-radius: 16px;
-  color: #fff;
-  font-size: 26px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.1s;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  backdrop-filter: blur(4px);
-}
-
-.touch-btn:active,
-.touch-btn.active {
-  background: rgba(255, 107, 53, 0.5);
-  border-color: #ff6b35;
-}
-
-/* ── Responsive tweaks ───────────────────── */
-@media (max-width: 500px) {
-  .controls-grid { grid-template-columns: 1fr; }
-  .overlay-box { padding: 24px 20px; }
-  #speedometer { right: 12px; bottom: 100px; }
-  #hud-info { left: 12px; bottom: 100px; }
-}
+#hud-buttons { position: absolute; top: 16px; right: 16px; display: flex; gap: 8px; pointer-events: all; }
+#hud-buttons button { background: #00ffff; border: 3px solid #000; border-radius: 8px; color: #000; font-size: 20px; width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 3px 3px 0px #2b00ff; transition: transform 0.1s; }
+#hud-buttons button:active { transform: translate(3px, 3px); box-shadow: 0px 0px 0px #2b00ff; }
 
 /* ── Score display ───────────────────────────────────────────── */
-#score-display {
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  pointer-events: none;
-}
+#score-display { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); text-align: center; pointer-events: none; transform-origin: center; }
+#score-label { font-family: 'Segoe UI', sans-serif; font-size: 14px; font-weight: 900; letter-spacing: 0.1em; color: #00ffff; text-shadow: 2px 2px 0px #000; margin-bottom: -4px; }
+#score-value { font-family: 'Impact', sans-serif; font-size: 48px; color: #ff0055; text-shadow: 4px 4px 0px #000, -2px -2px 0 #fff; line-height: 1; transition: transform 0.08s; }
+#score-value.bump { transform: scale(1.4) rotate(3deg); color: #ffff00; }
 
-#score-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  color: rgba(255,255,255,0.6);
-}
+#air-display, #grind-display { position: absolute; top: 90px; left: 50%; transform: translateX(-50%); border: 4px solid #000; font-family: 'Impact', sans-serif; font-size: 20px; letter-spacing: 0.1em; padding: 6px 20px; border-radius: 8px; pointer-events: none; box-shadow: 4px 4px 0px #000; animation: pulse 0.4s ease-in-out infinite alternate; }
+#air-display { background: #ff0055; color: #ffff00; }
+#grind-display { background: #00ffff; color: #000; top: 135px; }
 
-#score-value {
-  font-size: 36px;
-  font-weight: 900;
-  color: #fff;
-  text-shadow: 0 0 20px rgba(255,200,50,0.8), 0 2px 8px rgba(0,0,0,0.6);
-  line-height: 1;
-  transition: transform 0.08s;
-}
+@keyframes pulse { from { transform: translateX(-50%) scale(0.95) rotate(-2deg); } to { transform: translateX(-50%) scale(1.1) rotate(2deg); } }
 
-#score-value.bump {
-  transform: scale(1.35);
-  color: #ffdd44;
-}
+.score-popup { position: fixed; font-family: 'Impact', sans-serif; font-size: 32px; color: #ffff00; text-shadow: 3px 3px 0px #000; pointer-events: none; animation: popFly 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards; z-index: 50; }
+@keyframes popFly { 0% { opacity: 1; transform: translateY(0) scale(0.5) rotate(-10deg); } 30% { transform: translateY(-40px) scale(1.3) rotate(5deg); } 100% { opacity: 0; transform: translateY(-100px) scale(0.8) rotate(15deg); } }
 
-/* ── Air-time banner ─────────────────────────────────────────── */
-#air-display {
-  position: absolute;
-  top: 90px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255,120,0,0.85);
-  color: #fff;
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  padding: 6px 20px;
-  border-radius: 50px;
-  pointer-events: none;
-  backdrop-filter: blur(4px);
-  animation: pulse 0.5s ease-in-out infinite alternate;
-}
+/* ── Mobile Touch Controls ──────────────────────── */
+#touch-controls { position: absolute; inset: 0; display: none; pointer-events: none; }
+@media (pointer: coarse) { #touch-controls { display: block; } }
 
-@keyframes pulse {
-  from { opacity: 0.85; }
-  to   { opacity: 1; transform: translateX(-50%) scale(1.04); }
-}
+#joystick-zone { position: absolute; top: 20%; bottom: 0; left: 0; width: 50%; pointer-events: all; touch-action: none; }
+#joystick-base { position: absolute; width: 130px; height: 130px; margin: -65px 0 0 -65px; background: rgba(0,0,0,0.3); border: 4px solid #00ffff; border-radius: 50%; display: none; pointer-events: none; box-shadow: 4px 4px 0px rgba(0,0,0,0.5); }
+#joystick-knob { position: absolute; top: 50%; left: 50%; width: 60px; height: 60px; margin: -30px 0 0 -30px; background: #ff0055; border: 3px solid #000; border-radius: 50%; box-shadow: 4px 4px 0px #000; pointer-events: none; }
 
-/* ── Score popup (injected by JS) ───────────────────────────── */
-.score-popup {
-  position: fixed;
-  font-size: 22px;
-  font-weight: 900;
-  color: #ffee44;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
-  pointer-events: none;
-  animation: popFly 0.9s ease-out forwards;
-  z-index: 50;
-}
+#action-buttons { position: absolute; bottom: 30px; right: 30px; display: flex; gap: 12px; pointer-events: all; }
+.action-col { display: flex; flex-direction: column; gap: 12px; justify-content: flex-end; }
+.action-btn { font-family: 'Impact', sans-serif; border: 4px solid #000; border-radius: 12px; color: #000; touch-action: manipulation; -webkit-tap-highlight-color: transparent; box-shadow: 4px 4px 0px #000; display: flex; align-items: center; justify-content: center; }
+.action-btn:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px #000; }
 
-@keyframes popFly {
-  0%   { opacity: 1;   transform: translateY(0) scale(1); }
-  60%  { opacity: 0.9; transform: translateY(-38px) scale(1.15); }
-  100% { opacity: 0;   transform: translateY(-70px) scale(0.8); }
+.btn-major { width: 75px; height: 75px; font-size: 28px; background: #ffff00; }
+.btn-minor { width: 60px; height: 60px; font-size: 22px; background: #00ffff; }
+.jump-btn { background: #ff0055; color: #fff; }
+.trick-btn { background: #a040ff; color: #fff; font-size: 16px; }
+.nitro-btn { background: #ff6600; color: #fff; font-size: 20px; }
+
+@media (max-width: 600px) {
+  .controls-grid { grid-template-columns: 1fr; }
+  .overlay-box { padding: 24px 20px; }
+  #speedometer { bottom: 100px; transform: translateX(-50%) scale(0.85); }
+  #action-buttons { bottom: 20px; right: 20px; gap: 8px; }
+  .btn-major { width: 65px; height: 65px; font-size: 24px; }
+  .btn-minor { width: 50px; height: 50px; font-size: 18px; }
 }
