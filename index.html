@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Little City Drive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Freestyle Car Crash</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -13,13 +13,13 @@
     <div class="menu-bg"></div>
     <div class="menu-content">
       <div class="game-logo">
-        <span class="logo-little">LITTLE</span>
-        <span class="logo-city">CITY</span>
-        <span class="logo-drive">DRIVE</span>
+        <span class="logo-little">FREESTYLE</span>
+        <span class="logo-city">CAR</span>
+        <span class="logo-drive">CRASH</span>
       </div>
-      <p class="menu-subtitle">Take a ride. Explore the town. Enjoy the journey.</p>
+      <p class="menu-subtitle">Jump. Grind. Smash. Own the streets.</p>
       <div class="menu-buttons">
-        <button id="btn-start" class="btn-primary">▶ START DRIVING</button>
+        <button id="btn-start" class="btn-primary">▶ START ENGINE</button>
         <button id="btn-controls" class="btn-secondary">⌨ CONTROLS</button>
       </div>
     </div>
@@ -33,23 +33,22 @@
         <div class="control-section">
           <h3>⌨ Keyboard</h3>
           <table>
-            <tr><td><kbd>W</kbd> / <kbd>↑</kbd></td><td>Accelerate</td></tr>
-            <tr><td><kbd>S</kbd> / <kbd>↓</kbd></td><td>Brake / Reverse</td></tr>
-            <tr><td><kbd>A</kbd> / <kbd>←</kbd></td><td>Steer Left</td></tr>
-            <tr><td><kbd>D</kbd> / <kbd>→</kbd></td><td>Steer Right</td></tr>
-            <tr><td><kbd>Space</kbd></td><td>Handbrake</td></tr>
+            <tr><td><kbd>W</kbd> / <kbd>↑</kbd></td><td>Accelerate / Frontflip</td></tr>
+            <tr><td><kbd>S</kbd> / <kbd>↓</kbd></td><td>Brake / Backflip</td></tr>
+            <tr><td><kbd>A</kbd> / <kbd>←</kbd></td><td>Steer Left / Roll Left</td></tr>
+            <tr><td><kbd>D</kbd> / <kbd>→</kbd></td><td>Steer Right / Roll Right</td></tr>
+            <tr><td><kbd>Space</kbd></td><td><b>Jump / Double Jump / Wall Jump</b></td></tr>
+            <tr><td><kbd>F</kbd></td><td><b>Forward Dash</b></td></tr>
+            <tr><td><kbd>Shift</kbd></td><td><b>Nitro Boost</b> / Air Spin</td></tr>
             <tr><td><kbd>R</kbd></td><td>Reset Car</td></tr>
             <tr><td><kbd>C</kbd></td><td>Change Camera</td></tr>
+            <tr><td><kbd>RMB drag</kbd></td><td>Orbit Camera (360°)</td></tr>
             <tr><td><kbd>Esc</kbd></td><td>Pause</td></tr>
           </table>
         </div>
         <div class="control-section">
           <h3>📱 Mobile</h3>
-          <p>Use the on-screen buttons to drive. Touch and hold for continuous input.</p>
-          <div class="mobile-preview">
-            <div class="mp-row"><span class="mp-btn">▲</span></div>
-            <div class="mp-row"><span class="mp-btn">◄</span><span class="mp-btn">▼</span><span class="mp-btn">►</span></div>
-          </div>
+          <p>Left Side: <b>Virtual Joystick</b> for steering & aerial rotation.<br><br>Right Side: <b>Action Buttons</b> — Gas ▲, Jump J, Dash ⚡, Nitro 🔥, Flip ↑F/↓F.</p>
         </div>
       </div>
       <button id="btn-controls-close" class="btn-primary">GOT IT!</button>
@@ -70,17 +69,18 @@
 
     <!-- Score -->
     <div id="score-display">
-      <div id="score-label">SCORE</div>
+      <div id="score-label">STYLE SCORE</div>
       <div id="score-value">0</div>
     </div>
 
-    <!-- Air time indicator -->
-    <div id="air-display" class="hidden">🚀 AIRTIME!</div>
+    <!-- Air time / Grind indicator -->
+    <div id="air-display" class="hidden">🚀 BIG AIR!</div>
+    <div id="grind-display" class="hidden">⚡ RAIL GRIND!</div>
 
     <!-- Gear & Camera Info -->
     <div id="hud-info">
       <div class="hud-pill" id="gear-display">D</div>
-      <div class="hud-pill" id="cam-display">CAM 1</div>
+      <div class="hud-pill" id="cam-display">CHASE CAM</div>
     </div>
 
     <!-- Top-right buttons -->
@@ -89,17 +89,26 @@
       <button id="btn-reset-hud" title="Reset Car">↺</button>
     </div>
 
-    <!-- Mobile touch controls -->
+    <!-- MOBILE TOUCH CONTROLS -->
     <div id="touch-controls">
-      <div id="touch-left-col">
-        <button class="touch-btn" id="touch-left">◄</button>
+      <div id="joystick-zone">
+        <div id="joystick-base">
+          <div id="joystick-knob"></div>
+        </div>
       </div>
-      <div id="touch-center-col">
-        <button class="touch-btn" id="touch-accel">▲</button>
-        <button class="touch-btn" id="touch-brake">▼</button>
-      </div>
-      <div id="touch-right-col">
-        <button class="touch-btn" id="touch-right">►</button>
+      <div id="action-buttons">
+        <!-- Freestyle column: flip-forward / nitro-spin / flip-back -->
+        <div class="action-col">
+          <button class="action-btn btn-minor trick-btn" id="btn-flip-fwd" title="Frontflip">↑F</button>
+          <button class="action-btn btn-minor nitro-btn" id="btn-handbrake" title="Nitro">🔥</button>
+          <button class="action-btn btn-minor trick-btn" id="btn-flip-bwd" title="Backflip">↓F</button>
+        </div>
+        <!-- Gas / jump / dash -->
+        <div class="action-col" style="justify-content: flex-end;">
+          <button class="action-btn btn-major" id="btn-accel">▲</button>
+          <button class="action-btn btn-major jump-btn" id="btn-jump">J</button>
+          <button class="action-btn btn-minor trick-btn" id="btn-dash" title="Dash">⚡</button>
+        </div>
       </div>
     </div>
   </div>
