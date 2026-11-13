@@ -79,30 +79,84 @@ kbd { display: inline-block; background: #000; border: 2px solid #000; border-ra
 .score-popup { position: fixed; font-family: 'Impact', sans-serif; font-size: 32px; color: #ffff00; text-shadow: 3px 3px 0px #000; pointer-events: none; animation: popFly 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards; z-index: 50; }
 @keyframes popFly { 0% { opacity: 1; transform: translateY(0) scale(0.5) rotate(-10deg); } 30% { transform: translateY(-40px) scale(1.3) rotate(5deg); } 100% { opacity: 0; transform: translateY(-100px) scale(0.8) rotate(15deg); } }
 
-/* ── Mobile Touch Controls ──────────────────────── */
+/* ── Mobile Touch Controls (compact + translucent) ──────────── */
 #touch-controls { position: absolute; inset: 0; display: none; pointer-events: none; }
 @media (pointer: coarse) { #touch-controls { display: block; } }
 
-#joystick-zone { position: absolute; top: 20%; bottom: 0; left: 0; width: 50%; pointer-events: all; touch-action: none; }
-#joystick-base { position: absolute; width: 130px; height: 130px; margin: -65px 0 0 -65px; background: rgba(0,0,0,0.3); border: 4px solid #00ffff; border-radius: 50%; display: none; pointer-events: none; box-shadow: 4px 4px 0px rgba(0,0,0,0.5); }
-#joystick-knob { position: absolute; top: 50%; left: 50%; width: 60px; height: 60px; margin: -30px 0 0 -30px; background: #ff0055; border: 3px solid #000; border-radius: 50%; box-shadow: 4px 4px 0px #000; pointer-events: none; }
+#joystick-zone { position: absolute; top: 25%; bottom: 0; left: 0; width: 45%; pointer-events: all; touch-action: none; }
+#joystick-base { position: absolute; width: 104px; height: 104px; margin: -52px 0 0 -52px; background: rgba(0,0,0,0.18); border: 3px solid rgba(0,255,255,0.5); border-radius: 50%; display: none; pointer-events: none; }
+#joystick-knob { position: absolute; top: 50%; left: 50%; width: 42px; height: 42px; margin: -21px 0 0 -21px; background: rgba(255,0,85,0.65); border: 2px solid rgba(0,0,0,0.6); border-radius: 50%; pointer-events: none; }
 
-#action-buttons { position: absolute; bottom: 30px; right: 30px; display: flex; gap: 12px; pointer-events: all; }
-.action-col { display: flex; flex-direction: column; gap: 12px; justify-content: flex-end; }
-.action-btn { font-family: 'Impact', sans-serif; border: 4px solid #000; border-radius: 12px; color: #000; touch-action: manipulation; -webkit-tap-highlight-color: transparent; box-shadow: 4px 4px 0px #000; display: flex; align-items: center; justify-content: center; }
-.action-btn:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px #000; }
+/* 2 rows x 3 columns:  [↑F][🔥][⚡] / [↓F][J][▲]  — gas sits under the right thumb */
+#action-buttons { position: absolute; bottom: max(14px, env(safe-area-inset-bottom)); right: max(14px, env(safe-area-inset-right)); display: grid; grid-template-columns: auto auto auto; gap: 8px; align-items: center; justify-items: center; pointer-events: none; }
+.action-col { display: contents; }
+#btn-flip-fwd { grid-area: 1 / 1; } #btn-handbrake { grid-area: 1 / 2; } #btn-dash { grid-area: 1 / 3; }
+#btn-flip-bwd { grid-area: 2 / 1; } #btn-jump { grid-area: 2 / 2; } #btn-accel { grid-area: 2 / 3; }
 
-.btn-major { width: 75px; height: 75px; font-size: 28px; background: #ffff00; }
-.btn-minor { width: 60px; height: 60px; font-size: 22px; background: #00ffff; }
+.action-btn { font-family: 'Impact', sans-serif; border: 2px solid rgba(0,0,0,0.7); border-radius: 12px; color: #000; opacity: 0.6; pointer-events: all; touch-action: manipulation; -webkit-tap-highlight-color: transparent; box-shadow: 2px 2px 0 rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; transition: opacity 0.1s, transform 0.1s; }
+.action-btn:active, .action-btn.active { opacity: 0.95; transform: scale(0.93); box-shadow: none; }
+
+.btn-major { width: 58px; height: 58px; font-size: 22px; background: #ffff00; }
+.btn-minor { width: 44px; height: 44px; font-size: 16px; background: #00ffff; }
 .jump-btn { background: #ff0055; color: #fff; }
-.trick-btn { background: #a040ff; color: #fff; font-size: 16px; }
-.nitro-btn { background: #ff6600; color: #fff; font-size: 20px; }
+.trick-btn { background: #a040ff; color: #fff; font-size: 13px; }
+.nitro-btn { background: #ff6600; color: #fff; font-size: 17px; }
 
+@media (pointer: coarse) {
+  #speedometer { bottom: 6px; transform: translateX(-50%) scale(0.7); transform-origin: bottom center; }
+  #hud-info { top: 8px; left: 8px; gap: 6px; }
+  .hud-pill { padding: 3px 10px; font-size: 12px; border-width: 2px; box-shadow: 2px 2px 0 #ff0055; }
+  #hud-buttons { top: 8px; right: 8px; }
+  #hud-buttons button { width: 36px; height: 36px; font-size: 16px; }
+  #score-display { top: 6px; }
+  #score-value { font-size: 32px; }
+  #score-label { font-size: 11px; }
+  #air-display, #grind-display { top: 62px; font-size: 15px; padding: 3px 14px; }
+  #grind-display { top: 96px; }
+}
+@media (pointer: coarse) and (max-height: 420px) {
+  .btn-major { width: 52px; height: 52px; font-size: 20px; }
+  .btn-minor { width: 40px; height: 40px; font-size: 14px; }
+  #action-buttons { gap: 6px; bottom: 8px; right: 12px; }
+  #joystick-base { width: 92px; height: 92px; margin: -46px 0 0 -46px; }
+}
 @media (max-width: 600px) {
   .controls-grid { grid-template-columns: 1fr; }
   .overlay-box { padding: 24px 20px; }
-  #speedometer { bottom: 100px; transform: translateX(-50%) scale(0.85); }
-  #action-buttons { bottom: 20px; right: 20px; gap: 8px; }
-  .btn-major { width: 65px; height: 65px; font-size: 24px; }
-  .btn-minor { width: 50px; height: 50px; font-size: 18px; }
 }
+/* ── Comic text effect ("WHOOSH!") ───────────────────────── */
+.comic-text { position: fixed; z-index: 50; pointer-events: none; font-family: 'Impact', sans-serif; font-size: 44px; letter-spacing: 0.06em; color: #ffe600;
+  -webkit-text-stroke: 3px #000; paint-order: stroke fill; text-shadow: 4px 4px 0 #ff0055; transform: translate(-50%, -50%) rotate(-8deg); animation: comicPop 0.85s ease-out forwards; }
+@keyframes comicPop { 0% { opacity: 0; transform: translate(-50%, -50%) rotate(-8deg) scale(0.3); } 15% { opacity: 1; transform: translate(-50%, -50%) rotate(-8deg) scale(1.25); }
+  65% { opacity: 1; transform: translate(-50%, -50%) rotate(-8deg) scale(1); } 100% { opacity: 0; transform: translate(-50%, -60%) rotate(-8deg) scale(1.1); } }
+@media (pointer: coarse) { .comic-text { font-size: 30px; -webkit-text-stroke: 2px #000; } }
+/* ── Tutorial overlay (top-right card; never pauses or blocks the game outside its own box) ───────── */
+#tutorial { position: fixed; top: 68px; right: 16px; z-index: 60; width: min(360px, calc(100vw - 32px)); max-height: calc(100vh - 90px); display: flex; flex-direction: column; overflow: hidden; font-family: 'Segoe UI', sans-serif;
+  background: #fff; color: #000; border: 4px solid #000; border-radius: 12px; padding: 12px 14px 12px; box-shadow: 6px 6px 0 #ff0055; pointer-events: all; touch-action: manipulation; animation: tutIn 0.25s ease-out; }
+@keyframes tutIn { from { opacity: 0; transform: translateY(-10px) scale(0.96); } to { opacity: 1; transform: none; } }
+#tut-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.tut-head { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+#tut-step { font-weight: 900; font-size: 12px; letter-spacing: 0.08em; color: #fff; background: #2b00ff; border: 2px solid #000; border-radius: 6px; padding: 2px 8px; text-transform: uppercase; }
+#tutorial button { font-family: 'Impact', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; border: 3px solid #000; border-radius: 8px; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+#tut-skip { background: #ff0055; color: #fff; font-size: 12px; padding: 4px 10px; box-shadow: 2px 2px 0 #000; }
+#tut-title { font-family: 'Impact', sans-serif; font-size: 22px; letter-spacing: 0.05em; text-transform: uppercase; text-shadow: 2px 2px 0 #00ffff; margin: 2px 0 4px; }
+#tut-text { font-size: 14px; font-weight: 600; line-height: 1.45; margin-bottom: 8px; }
+#tut-keys { background: #f3f0ff; border: 2px dashed #2b00ff; border-radius: 8px; padding: 7px 9px; font-size: 13px; font-weight: 700; line-height: 1.9; margin-bottom: 8px; }
+.tut-mb { display: none; }
+@media (pointer: coarse) { .tut-kb { display: none; } .tut-mb { display: block; } }
+#tut-dots { flex: none; display: flex; justify-content: center; gap: 6px; margin-bottom: 8px; }
+#tut-dots i { width: 10px; height: 10px; border: 2px solid #000; border-radius: 50%; background: #fff; }
+#tut-dots i.done { background: #00ffff; } #tut-dots i.on { background: #ffff00; transform: scale(1.3); box-shadow: 0 0 0 2px #ff0055; }
+.tut-nav { flex: none; display: flex; gap: 8px; }
+.tut-nav button { flex: 1; font-size: 15px; padding: 8px 6px; min-height: 40px; box-shadow: 3px 3px 0 #ff0055; background: #ffff00; color: #000; }
+#tut-prev { background: #00ffff; }
+.tut-nav button:active { transform: translate(2px, 2px); box-shadow: none; }
+.tut-nav button:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+/* mobile landscape: compact card, away from the joystick (bottom-left) and action buttons (bottom-right) */
+@media (pointer: coarse) {
+  #tutorial { top: 52px; right: 8px; width: min(340px, 52vw); max-height: calc(100vh - 165px); padding: 8px 10px; border-width: 3px; box-shadow: 4px 4px 0 #ff0055; }
+  #tut-title { font-size: 17px; } #tut-text { font-size: 12px; margin-bottom: 5px; } #tut-keys { font-size: 11.5px; line-height: 1.6; padding: 5px 7px; margin-bottom: 5px; }
+  #tut-step { font-size: 10px; } #tut-skip { font-size: 11px; padding: 5px 9px; } #tut-dots { margin-bottom: 5px; }
+  .tut-nav button { font-size: 13px; padding: 6px 4px; min-height: 38px; }
+}
+@media (max-width: 600px) and (pointer: fine) { #tutorial { top: 60px; right: 8px; } }
