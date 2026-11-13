@@ -21,6 +21,8 @@
       <div class="menu-buttons">
         <button id="btn-start" class="btn-primary">▶ START ENGINE</button>
         <button id="btn-controls" class="btn-secondary">⌨ CONTROLS</button>
+        <button id="btn-fullscreen-menu" class="btn-secondary">⛶ FULLSCREEN</button>
+        <button id="btn-mute-menu" class="btn-secondary">🔊 SOUND: ON</button>
       </div>
     </div>
   </div>
@@ -43,12 +45,13 @@
             <tr><td><kbd>R</kbd></td><td>Reset Car</td></tr>
             <tr><td><kbd>C</kbd></td><td>Change Camera</td></tr>
             <tr><td><kbd>RMB drag</kbd></td><td>Orbit Camera (360°)</td></tr>
+            <tr><td><kbd>MMB click</kbd></td><td>Reset Camera</td></tr>
             <tr><td><kbd>Esc</kbd></td><td>Pause</td></tr>
           </table>
         </div>
         <div class="control-section">
           <h3>📱 Mobile</h3>
-          <p>Left Side: <b>Virtual Joystick</b> for steering & aerial rotation.<br><br>Right Side: <b>Action Buttons</b> — Gas ▲, Jump J, Dash ⚡, Nitro 🔥, Flip ↑F/↓F.</p>
+          <p>Left Side: <b>Virtual Joystick</b> for steering & aerial rotation.<br><br>Right Side: Gas ▲, Jump J (tap twice = double jump), Dash ⚡, Nitro 🔥, Flip ↑F/↓F.</p>
         </div>
       </div>
       <button id="btn-controls-close" class="btn-primary">GOT IT!</button>
@@ -85,6 +88,8 @@
 
     <!-- Top-right buttons -->
     <div id="hud-buttons">
+      <button id="btn-mute" title="Mute">🔊</button>
+      <button id="btn-fullscreen" title="Fullscreen">⛶</button>
       <button id="btn-pause-hud" title="Pause">⏸</button>
       <button id="btn-reset-hud" title="Reset Car">↺</button>
     </div>
@@ -120,8 +125,27 @@
       <div class="menu-buttons">
         <button id="btn-resume" class="btn-primary">▶ RESUME</button>
         <button id="btn-restart" class="btn-secondary">↺ RESTART</button>
+        <button id="btn-tutorial" class="btn-secondary">? TUTORIAL</button>
         <button id="btn-mainmenu" class="btn-secondary">⌂ MAIN MENU</button>
       </div>
+    </div>
+  </div>
+
+  <!-- TUTORIAL (non-blocking overlay; content is filled in by game.js) -->
+  <div id="tutorial" class="hidden" role="dialog" aria-label="Tutorial">
+    <div class="tut-head">
+      <span id="tut-step">Step 1 of 8</span>
+      <button id="tut-skip" type="button">SKIP TUTORIAL ✕</button>
+    </div>
+    <div id="tut-body">
+      <h3 id="tut-title"></h3>
+      <p id="tut-text"></p>
+      <div id="tut-keys"></div>
+    </div>
+    <div id="tut-dots"></div>
+    <div class="tut-nav">
+      <button id="tut-prev" type="button">◀ PREV</button>
+      <button id="tut-next" type="button">NEXT ▶</button>
     </div>
   </div>
 
